@@ -1,0 +1,35 @@
+{% extends 'default/todo.app.html.twig' %}
+
+{% block title %}Hello TodoController!{% endblock %}
+
+
+{% block form %}
+
+
+<div class="header">
+    <h2>My To Do List</h2>
+    <form action="{{path('create_task')}}" method="post">
+        <input type="text" name="title" id="myInput" placeholder="Task title..." />
+        <button type="submit" class="addBtn">Add a task</button>
+    </form>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+    <ul>
+        {% for task in tasks %}
+            <li {% if task.status%}class="checked"{% endif %}>
+                <a href="{{path('switch_status',{'id':task.id})}}"> <span class="task-list-item">{{task.title}} </span> </a
+                ><a onclick="return confirm('Are you sure to delete?')" href="{{path('task_delete',{'id':task.id})}}"><span class="close">X</span></a>
+            </li>
+        {% endfor %}
+
+
+    </ul>
+
+    <div class="navigation">
+        {{ knp_pagination_render(tasks) }}
+    </div>
+{% endblock %}
